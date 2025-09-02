@@ -9,4 +9,5 @@ const ProgressBar = ({ value }) => {
   );
 };
 
+
 export default ProgressBar;

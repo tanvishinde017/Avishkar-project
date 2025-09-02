@@ -1,8 +1,9 @@
-import React from 'react';
-import '../style.css';
+// Card.jsx
+import React from "react";
+import "../style.css";
 
-const Card = ({ children }) => (
-  <div className="card">{children}</div>
-);
+const Card = ({ children }) => {
+  return <div className="card">{children}</div>;
+};
 
 export default Card;

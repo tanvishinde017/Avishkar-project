@@ -3,10 +3,16 @@ import Card from "../components/Card";
 import "../style.css";
 
 const SkillGapAnalysisPage = ({ user, industrySkills, setView }) => {
-  // Find missing skills
+  // Calculate missing skills
   const missingSkills = industrySkills.filter(
     (skill) => !user.skills.includes(skill)
   );
+
+  // Calculate readiness score
+  const readinessScore =
+    industrySkills.length > 0
+      ? Math.round((user.skills.length / industrySkills.length) * 100)
+      : 0;
 
   return (
     <div className="center">
@@ -42,16 +48,32 @@ const SkillGapAnalysisPage = ({ user, industrySkills, setView }) => {
         <div className="progress-container">
           <div
             className="progress-fill"
-            style={{
-              width: `${(user.skills.length / industrySkills.length) * 100}%`,
-            }}
+            style={{ width: `${readinessScore}%` }}
           ></div>
         </div>
         <p>
           {user.skills.length} / {industrySkills.length} essential skills covered
         </p>
 
-        {/* Navigation */}
+        {/* Readiness Score */}
+        <h3>✅ Readiness Score</h3>
+        <p className="score">{readinessScore}% Match</p>
+
+        {/* Top Recommended Skills */}
+        <h3>🔥 Top Skills to Learn</h3>
+        <ul className="skill-list top-skills">
+          {missingSkills.length > 0 ? (
+            missingSkills.slice(0, 3).map((skill) => (
+              <li key={skill}>
+                {skill} <span className="suggestion">(Recommended)</span>
+              </li>
+            ))
+          ) : (
+            <li>You're already covering all key skills! 🔥</li>
+          )}
+        </ul>
+
+        {/* Navigation Buttons */}
         <div className="form-actions">
           <button className="btn secondary" onClick={() => setView("personalInfo")}>
             ⬅ Back
